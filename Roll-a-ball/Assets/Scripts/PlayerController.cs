@@ -2,17 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
+    [SerializeField] TextMeshProUGUI countText;
+    [SerializeField] GameObject winTextObj;
 
     private Rigidbody rb;
     private float moveX, moveY;
+    private float count;
 
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
+        
+        count = 0;
+        SetCountText();
+
+        winTextObj.SetActive(false);
+    }
+
+    void SetCountText() {
+        countText.text = "Count: " + count.ToString();
+
+        if(count >= 3) 
+            winTextObj.SetActive(true);
     }
 
     void OnMove(InputValue movementValue) {
@@ -28,7 +44,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("PickUps"))
+        if(other.gameObject.CompareTag("PickUps")) {
             other.gameObject.SetActive(false);
+            count++;
+            SetCountText();
+        }
     }
 }
