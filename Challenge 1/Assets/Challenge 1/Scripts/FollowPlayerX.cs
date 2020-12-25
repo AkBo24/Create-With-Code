@@ -8,14 +8,12 @@ public class FollowPlayerX : MonoBehaviour
     private Vector3 offset;
 
     // Start is called before the first frame update
-    void Start()
-    {
-
+    void Start() {
+        offset = new Vector3(100, 0, 0);
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         transform.position = plane.transform.position + offset;
     }
 }
